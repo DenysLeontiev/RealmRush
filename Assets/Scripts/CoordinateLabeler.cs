@@ -7,7 +7,6 @@ public class CoordinateLabeler : MonoBehaviour
     private TextMeshPro label;
     private Vector2Int coordinates = new Vector2Int();
 
-
     private void Awake()
     {
         label = GetComponent<TextMeshPro>();
