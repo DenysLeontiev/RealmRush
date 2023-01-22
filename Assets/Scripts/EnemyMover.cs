@@ -8,9 +8,27 @@ public class EnemyMover : MonoBehaviour
     [Range(0f, 5f)]
     [SerializeField] private float speed = 1f;
 
-    private void Start()
+    private void OnEnable()
     {
+        FindPath();
+        ReturnToStart();
         StartCoroutine(FollowPath());
+    }
+
+    private void FindPath()
+    {
+        path.Clear();
+
+        GameObject parent = GameObject.FindWithTag("Path");
+        foreach (Transform child in parent.transform)
+        {
+            path.Add(child.GetComponent<Waypoint>());
+        }
+    }
+
+    private void ReturnToStart()
+    {
+        transform.position = path[0].transform.position;
     }
 
     private IEnumerator FollowPath()
@@ -29,5 +47,7 @@ public class EnemyMover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        gameObject.SetActive(false);
     }
 }
